@@ -1,0 +1,50 @@
+discord:
+  channel-id: ""
+
+roles:
+  winner: "000000000000000001"
+  loser: "000000000000000002"
+
+messages:
+  prefix-groups:
+    everyone:
+      matches:
+        - "rift.*"
+        - "end.*"
+
+  default:
+    template: "{type} {player}"
+
+  upgrade:
+    legendary:
+      template: "전설의 \"{itemName}\" 이(가) 탄생했습니다!"
+    destroy:
+      template: "누군가의 \"{itemName}\" 아이템이 강화에 실패하여 파괴되었습니다."
+
+  clan:
+    absorb:
+      template: "@everyone {role:loser} 가문이 마지막 파일런을 잃고 {role:winner} 가문에게 흡수되었습니다"
+    recruit:
+      template: "@{clan}팀이 \"{player}\" 님을 새로운 가문원으로 영입했습니다!"
+    intrude:
+      template: "팀의 영역에 외부인이 접근했습니다"
+    pylon_destroyed:
+      template: "팀의 파일런이 파괴되었습니다"
+
+  rift:
+    unstable:
+      template: "@everyone 차원의 어딘가가 불안정합니다"
+    strong_energy:
+      template: "@everyone 균열에서 강력한 기운이 감지됩니다!"
+    closed:
+      template: "@everyone 차원의 균열이 닫힙니다."
+
+  end:
+    twitching:
+      template: "@everyone 공허의 기운이 꿈틀거립니다... {minutes}분 뒤 엔드 포탈이 열립니다!"
+    opened:
+      template: "@everyone 엔더 드래곤의 포효가 들려옵니다! 엔드포탈이 활성화되었습니다!"
+    closed:
+      template: "@everyone 엔더 드래곤이 쓰러져 엔드 포탈이 닫혔습니다!"
+    collapse:
+      template: "@everyone 엔드 월드가 {minutes}분 뒤 붕괴를 시작합니다! 서둘러 탈출하세요!"
