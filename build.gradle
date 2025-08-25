@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.dfbridge'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    // Paper API
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    // Optional: if you want to compile against DiscordSRV, uncomment below and ensure artifact is resolvable
+    // maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT'
+    // compileOnly 'com.github.DiscordSRV:DiscordSRV:1.30.0' // (optional) prefer reflection at runtime
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveBaseName.set('DFDiscordBridge')
+    archiveVersion.set('')
+}
+
+tasks.register('copyPlugin', Copy) {
+    dependsOn build
+    from(layout.buildDirectory.file('libs/DFDiscordBridge.jar'))
+    into(System.getProperty('user.home') + '/server/plugins')
+}
