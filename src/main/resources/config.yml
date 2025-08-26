@@ -1,9 +1,16 @@
 discord:
-  channel-id: ""
+  channel-id: "123456789012345678"
 
 roles:
-  winner: "000000000000000001"
-  loser: "000000000000000002"
+  named:
+    winner: "000000000000000001"
+    loser:  "000000000000000002"
+
+  byTeam:
+    red:   "111111111111111111"
+    green: "222222222222222222"
+    blue:  "333333333333333333"
+    yellow:"444444444444444444"
 
 messages:
   prefix-groups:
@@ -15,21 +22,21 @@ messages:
   default:
     template: "{type} {player}"
 
+  clan:
+    intrude:
+      template: "{role:team:clan} 팀의 영역에 외부인이 접근했습니다"
+    pylon_destroyed:
+      template: "{role:team:clan} 팀의 파일런이 파괴되었습니다"
+    absorb:
+      template: "{everyone} {role:team:loserClan} 가문이 마지막 파일런을 잃고 {role:team:winnerClan} 가문에게 흡수되었습니다"
+    recruit:
+      template: "{everyone} {role:team:clan} 팀이 \"{player}\" 님을 새로운 가문원으로 영입했습니다!"
+
   upgrade:
     legendary:
-      template: "전설의 \"{itemName}\" 이(가) 탄생했습니다!"
+      template: "@everyone 전설의 \"{itemName}\" 이(가) 탄생했습니다!"
     destroy:
-      template: "누군가의 \"{itemName}\" 아이템이 강화에 실패하여 파괴되었습니다."
-
-  clan:
-    absorb:
-      template: "@everyone {role:loser} 가문이 마지막 파일런을 잃고 {role:winner} 가문에게 흡수되었습니다"
-    recruit:
-      template: "@{clan}팀이 \"{player}\" 님을 새로운 가문원으로 영입했습니다!"
-    intrude:
-      template: "팀의 영역에 외부인이 접근했습니다"
-    pylon_destroyed:
-      template: "팀의 파일런이 파괴되었습니다"
+      template: "@everyone 누군가의 \"{itemName}\" 아이템이 강화에 실패하여 파괴되었습니다."
 
   rift:
     unstable:
