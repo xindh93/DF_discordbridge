@@ -17,13 +17,35 @@ public final class MessageFormatter {
         if (template == null) template = "";
         String result = template;
 
-        // {role:KEY} -> <@&ROLEID>
+        // {role:namedKey} and {role:team:varName}
         Matcher rm = ROLE_PATTERN.matcher(result);
         StringBuffer sb = new StringBuffer();
         while (rm.find()) {
             String key = rm.group(1);
-            String roleId = rolesSection != null ? rolesSection.getString(key) : null;
-            String replacement = roleId != null && !roleId.isEmpty() ? "<@&" + roleId + ">" : "";
+            String replacement = "";
+            if (rolesSection != null) {
+                if (key.startsWith("team:")) {
+                    String varName = key.substring("team:".length());
+                    String teamName = data != null ? data.get(varName) : null;
+                    if (teamName != null) {
+                        ConfigurationSection byTeam = rolesSection.getConfigurationSection("byTeam");
+                        if (byTeam != null) {
+                            String roleId = byTeam.getString(teamName);
+                            if (roleId != null && !roleId.isEmpty()) {
+                                replacement = "<@&" + roleId + ">";
+                            }
+                        }
+                    }
+                } else {
+                    ConfigurationSection named = rolesSection.getConfigurationSection("named");
+                    if (named != null) {
+                        String roleId = named.getString(key);
+                        if (roleId != null && !roleId.isEmpty()) {
+                            replacement = "<@&" + roleId + ">";
+                        }
+                    }
+                }
+            }
             rm.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
         rm.appendTail(sb);
@@ -36,8 +58,8 @@ public final class MessageFormatter {
         Matcher vm = VAR_PATTERN.matcher(result);
         sb = new StringBuffer();
         while (vm.find()) {
-            String key = vm.group(1);
-            String replacement = data != null ? data.getOrDefault(key, "") : "";
+            String var = vm.group(1);
+            String replacement = data != null ? data.getOrDefault(var, "") : "";
             vm.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
         vm.appendTail(sb);
